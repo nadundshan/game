@@ -6,7 +6,8 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Include the database connection file
-include('db.php');
+include('db.php');\
+include 'music_player.php';
 
 // Get the current logged-in user's username from the session
 $username = $_SESSION['username'];

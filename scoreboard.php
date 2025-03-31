@@ -3,6 +3,7 @@ session_start();
 
 // Include the database connection file
 include('db.php');
+include 'music_player.php';
 
 // Ensure the user is logged in
 if (!isset($_SESSION['username'])) {

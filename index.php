@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'music_player.php';
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
@@ -68,6 +69,7 @@ if (!isset($_SESSION['username'])) {
             background: linear-gradient(45deg, #ff9900, #ff6600);
             transform: scale(1.1);
         }
+    
     </style>
 </head>
 <body>
@@ -78,9 +80,7 @@ if (!isset($_SESSION['username'])) {
 
         <button onclick="window.location.href='login.php'">Back to Login</button>
         <button onclick="window.location.href='scoreboard.php'">Score Board</button>
-        <button onclick="window.location.href='game_interface.php'">Play the Game</button>
-       
-        
+        <button onclick="window.location.href='game_interface.php'">Play the Game</button> 
     </div>
 
 </body>
