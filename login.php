@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'db.php';
+include 'music_player.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -141,43 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-decoration: underline;
         }
 
-        /* Music Control */
-        .music-controls {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .music-controls button {
-            background:rgb(201, 27, 143);
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .music-controls button:hover {
-            background: #e6b800;
-        }
-
-        .music-controls input {
-            width: 100px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Background Music -->
-    <audio id="bg-music" loop>
-        <source src="audio_tracks\Aylex_Guardians.mp3" type="audio/mp3">
-    </audio>
 
     <div class="login-container">
         <h2>🍌 Welcome 🍌</h2>
@@ -195,41 +164,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="register.php"><button>Register</button></a>
         </div>
     </div>
-
-    <!-- Music Controls -->
-    <div class="music-controls">
-        <button id="music-toggle" onclick="toggleMusic()">🔊</button>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
-    </div>
-
-    <script>
-        let music = document.getElementById("bg-music");
-        let musicToggle = document.getElementById("music-toggle");
-        let volumeSlider = document.getElementById("volume-slider");
-
-        // Auto-play music when page loads
-        document.addEventListener("DOMContentLoaded", function() {
-            music.volume = 0.5;
-            music.play().catch(error => {
-                console.log("Autoplay blocked by browser, user must interact first.");
-            });
-        });
-
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                musicToggle.textContent = "🔊";
-            } else {
-                music.pause();
-                musicToggle.textContent = "🔇";
-            }
-        }
-
-        // Adjust volume with slider
-        volumeSlider.addEventListener("input", function() {
-            music.volume = volumeSlider.value;
-        });
-    </script>
-
 </body>
 </html>

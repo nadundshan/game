@@ -1,5 +1,6 @@
 <?php
 include 'db.php'; // Database connection
+include 'music_player.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
