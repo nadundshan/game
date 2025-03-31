@@ -1,13 +1,14 @@
 <?php
 session_start();
+include 'music_player.php';
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
 
 // Include the database connection file
-include('db.php');\
-include 'music_player.php';
+include('db.php');
+
 
 // Get the current logged-in user's username from the session
 $username = $_SESSION['username'];
