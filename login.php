@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         body {
-            background: url('images/background_ime_login_page.jpg') no-repeat center center fixed;
+            background: url('images/background_ime_login.jpg') no-repeat center center fixed;
             background-size: cover;   
         }
 

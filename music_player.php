@@ -5,7 +5,7 @@
 </div>
 
 <audio id="bg-music" loop>
-    <source src="audio_tracks/Aylex_Guardians.mp3" type="audio/mp3">
+    <source src="audio_tracks\background_music.mp3" type="audio/mp3">
 </audio>
 
 <script>
@@ -15,7 +15,7 @@
 
     // Auto-play music when page loads
     document.addEventListener("DOMContentLoaded", function() {
-        music.volume = 0.5;
+        music.volume = 0.1;
         music.play().catch(error => {
             console.log("Autoplay blocked by browser, user must interact first.");
         });
