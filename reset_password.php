@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Banana Game - Reset Password</title>
     <style>
+       
         body {
             font-family: Arial, sans-serif;
             background: url('https://source.unsplash.com/1600x900/?banana') no-repeat center center fixed;
@@ -45,8 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: 100vh;
             margin: 0;
         }
+
+        body {
+            background: url('images/background_ime_login.jpg') no-repeat center center fixed;
+            background-size: cover;   
+        }
         .reset-container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(56, 53, 53, 0.9);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -57,6 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         h2 {
             color: #ffcc00;
             font-size: 24px;
+        }
+        a {
+            color: #ffcc00;
+            font-size: 18px; 
+
         }
         .reset-container input {
             width: 100%;
@@ -85,7 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .success-message {
             color: green;
-            font-size: 14px;
+            font-size: 16px;
+            background-color: cornsilk;
         }
         .back-button {
             margin-top: 10px;
@@ -98,6 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .back-button a:hover {
             text-decoration: underline;
         }
+
+        
     </style>
 </head>
 <body>

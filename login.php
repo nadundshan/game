@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Banana Game - Login</title>
     <style>
         /*Background Styling */
+     
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
             margin: 0;
@@ -92,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .login-container input {
-            width: 89%;
+            width: 100%;
             padding: 12px;
             margin: 10px 0;
             border: 2px solid #ffcc00;
@@ -100,6 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-size: 16px;
             transition: transform 0.2s ease-in-out;
         }
+
+      
 
         /* Input Zoom Effect */
         .login-container input:focus {
