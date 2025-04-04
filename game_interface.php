@@ -26,10 +26,11 @@ if ($result->num_rows > 0) {
     $result_score = $stmt_score->get_result();
     
     $user_score = ($result_score->num_rows > 0) ? $result_score->fetch_assoc()['score'] : 0;
+
+
 } else {
     die("User not found.");
 }
-
 
 $conn->close();
 ?>
@@ -102,16 +103,16 @@ $conn->close();
             animation: fadeIn 7s ease-in-out;
         }  
           
-        /*.Your-Score  {
-            display: flex;
+        .Your-Score  {
+            display: block;
             width: 95%;
             max-width: 1200px;
-            background: rgb(240, 243, 55);
+            background: rgb(0, 0, 0);
             padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(33, 240, 92, 0.4);
-            animation: fadeIn 7s ease-in-out;
-        }  */        
+            box-shadow: 0 25px 20px rgb(255, 251, 0);
+            animation: fadeIn 5s ease-in-out;
+        }         
 
         .time-counting {
              display: flex;
@@ -140,10 +141,10 @@ $conn->close();
         input[type='text'] {
             padding: 12px;
             border-radius: 10px;
-            border: 2px solid #ffcc00;
+            border: 2px solidhsl(48, 100.00%, 50.00%);
             width: 160px;
             text-align: center;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
             background: #fff8dc;
         }
@@ -155,7 +156,7 @@ $conn->close();
         label{
             font-size: 24px;
             font-weight: bold;
-            color: blue;
+            color: black;
         }
 
         button {
@@ -201,20 +202,7 @@ $conn->close();
         #questionImage {
             display: none;
         }
-        #moodContainer {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    display: none; /* Initially hidden */
-}
-
-#moodContainer img {
-    width: 80px;
-    position: absolute;
-    opacity: 1;
-}
+  
 
 @keyframes fall {
     0% { transform: translateY(-50px); opacity: 1; }
@@ -224,14 +212,16 @@ $conn->close();
 .fall-animation {
     animation: fall 1.5s ease-in-out forwards;
 }
+h3 {
+    font-size: 22px;
+    color: #ffeb3b;
+    text-shadow: 2px 2px 4px black;
+}
 
     </style>
 </head>
 <body>
-<div id="moodContainer">
-    <img id="sadMood" src="😴😴" alt="😴😴">
-    <img id="happyMood" src="👌👌" alt="👌👌">
-</div>
+
 
     <div class="game-container">
         <div class="left-container">
@@ -252,14 +242,15 @@ $conn->close();
         <div class="right-container">
             <div>
               <h1>🍌 Welcome, <?php echo $_SESSION['username']; ?>! 🍌</h1>
-   
-              <p>Your Score In Previous Play Time: <strong><span id="score"><?php echo $user_score; ?></span></strong></p>
+
+<p id="levelDisplay" style="font-size: 24px; font-weight: bold; color: green;">Achievement Level: </p>
+
 
               <label>Enter the Answer:</label>
              </div>
 
              <div class="time-counting">
-                   <input type="text" id="answer" pattern="[0-9]*" inputmode="numeric" oninput="validateInput(this)">
+                   <input type="text" id="answer" pattern="[0-9]*" placeholder="Answer" inputmode="numeric" oninput="validateInput(this)">
                    <h1>Time</h1>
                    <p id="timer">60</p>
                    </div>
@@ -280,8 +271,28 @@ $conn->close();
     let wrongAttempts = 0;
     let timer;
     let isGameActive = false;
+    let currentScore = 0;
+    let currentLevel = "";
 
- 
+    function getLevel(score) {
+    if (score < 50) return "Banana Baby";
+    else if (score < 100) return "Banana Warrior";
+    else if (score < 150) return "Banana Master";
+    else return "Banana God";
+}
+
+function updateLevel(score) {
+    const newLevel = getLevel(score);
+    if (newLevel !== currentLevel) {
+        currentLevel = newLevel;
+        $("#levelDisplay").fadeOut(300, function () {
+            $(this).text("Level: " + newLevel).fadeIn(300);
+        });
+    }
+}
+
+
+
 
     function startTimer() {
         let timeLeft = 60;
@@ -320,16 +331,19 @@ $conn->close();
         });
     }
 
-    function checkAnswer() {
-    let userAnswer = $("#answer").val();
+function checkAnswer() {
+    const userAnswer = document.getElementById("answer").value;
 
-    if (userAnswer === "") {
-        alert("Enter the Answer!"); // Show an alert
-        return; // Stop function execution
-    }
     $.post("check.php", { answer: userAnswer }, function(response) {
         $("#result").html(response);
-        
+
+        // The Score extract from response
+        const match = response.match(/Your Score:\s*(\d+)/i);
+        if (match) {
+            currentScore = parseInt(match[1]);
+            updateLevel(currentScore); // <-- Level auto update
+        }
+
         if (response.includes("Wrong")) {
             wrongAttempts++;
         } else {
@@ -341,11 +355,11 @@ $conn->close();
             wrongAttempts = 0;
         }
 
-        updateScore();
         loadQuestion();
-        document.getElementById("answer").value = ""; // Clear the input field after checking the answer
+        document.getElementById("answer").value = "";
     });
 }
+
 
 
     function triggerBombExplosion() {
@@ -353,11 +367,7 @@ $conn->close();
         alert("💥 Boom! You answered wrong 3 times! Be careful!");
     }
 
-    function updateScore() {
-        $.get("update_score.php", function(data) {
-            $("#score").text(data);
-        });
-    }
+    
 
     function goToScoreboard() {
         window.location.href = "scoreboard.php";
@@ -374,7 +384,7 @@ $conn->close();
     $("#answer").prop("disabled", true);
     $("button:contains('Check Answer')").prop("disabled", true);
 
-    updateScore();
+    
 });
 
 $(document).ready(function () {
@@ -419,52 +429,8 @@ $("button:contains('Check Answer')").off("click").on("click", function() {
         alert("Please start the game first!");
         return;
     }
-    //checkAnswer();
-});
-
-function checkAnswer() {
-    let userAnswer = $("#answer").val();
-
-    if (!userAnswer) {
-        alert("Enter the Answer!");
-        return;
-    }
-
-    $.post("check.php", { answer: userAnswer }, function(response) {
-        $("#result").html(response);
-        
-        if (response.includes("Wrong")) {
-            wrongAttempts++;
-            showMoodEffect("sad");
-        } else {
-            wrongAttempts = 0;
-            showMoodEffect("happy");
-        }
-
-        if (wrongAttempts >= 3) {
-            triggerBombExplosion();
-            wrongAttempts = 0;
-        }
-
-        updateScore();
-        loadQuestion();
-        $("#answer").val(""); // Clear input field
-    });
-}
-
-function showMoodEffect(type) {
-    let moodImg = (type === "sad") ? "#sadMood" : "#happyMood";
-
-    $("#moodContainer").show();
-    $(moodImg).addClass("fall-animation");
-
-    setTimeout(() => {
-        $(moodImg).removeClass("fall-animation");
-        $("#moodContainer").hide();
-    }, 1500);
-}
- 
-            
+    
+});           
 </script>
 </body>
 </html>

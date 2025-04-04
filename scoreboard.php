@@ -137,11 +137,18 @@ $result_top_scores = $conn->query($sql_top_scores);
             transform: scale(1);
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
         }
+
+        h1 {
+
+            font-size: 18px;
+            color:rgb(19, 221, 63);
+            animation: bounce 1s infinite alternate;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Banana Game - Scoreboard</h1>
+    <h3>Banana Game - Scoreboard</h3>
 
     <table>
         <tr>
@@ -167,6 +174,12 @@ $result_top_scores = $conn->query($sql_top_scores);
         ?>
 
     </table>
+
+<h2>Player Achievement Level</h2>
+<h1>Down 50 = Banana Baby</h1>
+<h1>Down 100 = Banana Warrior</h1>
+<h1>Down 150 = Banana Master</h1>
+<h1>Up   150 = Banana God</h1>
 
     <a href="index.php">
         <button class="back-btn">Back to Home</button>

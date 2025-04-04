@@ -17,8 +17,8 @@ if ($correctAnswer === null) {
 // Determine score change
 $scoreChange = ($userAnswer == $correctAnswer) ? 10 : -5;
 echo $scoreChange > 0 
-    ? "<p style='color: green;'>Correct! +10 Points</p>" 
-    : "<p style='color: red;'>Wrong! -5 Points</p>";
+    ? "<p style='color: green; font-size: 20px;'>Correct! +10 Points</p>" 
+    : "<p style='color: red;font-size: 20px;'>Wrong! -5 Points</p>";
 
 // Step 1: Get user_id from users table
 $userQuery = "SELECT id FROM users WHERE username = ?";
